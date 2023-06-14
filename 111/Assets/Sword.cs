@@ -4,10 +4,9 @@ using UnityEngine;
 
 public class Sword : MonoBehaviour
 {
-    
-    int test = 0;
     public Animator anim;
-
+    public GameObject particle;
+    public Player player;
     void Start()
     {
         
@@ -22,7 +21,11 @@ public class Sword : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.tag =="Object" && anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
-        {        
+        {
+            if(player.attackCount < player.maxAttackCount)
+                player.attackCount++;
+            GameObject part = Instantiate(particle, collision.transform.position, Quaternion.identity);
+            Destroy(part, 2f);
             Destroy(collision.gameObject);      
         }
     }
