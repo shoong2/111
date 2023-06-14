@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public GameObject sword;
     GameObject bottom;
 
+    public GameObject particle;
     void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -34,4 +35,22 @@ public class Player : MonoBehaviour
         anim.SetTrigger("Attack");
   
     }
+
+    public void Shield()
+    {
+        rigid.AddForce(Vector3.up * jump, ForceMode2D.Impulse);
+    }
+
+ 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag=="Object")
+        {
+            Debug.Log("Ãæµ¹");
+            GameObject part = Instantiate(particle, collision.transform.position, Quaternion.identity);
+            Destroy(part, 2f);
+            Destroy(collision.gameObject);
+        }
+    }
+
 }
