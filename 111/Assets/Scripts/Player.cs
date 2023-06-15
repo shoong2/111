@@ -14,18 +14,20 @@ public class Player : MonoBehaviour
     public GameObject particle;
     public GameObject health;
 
-    bool isGround = true;
+    public bool isGround = true;
     int healthCount;
 
     //게이지 관리
     [Header("UI")]
-    public Image attackBar;
-    public float maxAttackCount = 10;
-    public float attackCount = 0;
+    //public Image attackBar;
+    //public float maxAttackCount = 10;
+    //public float attackCount = 0;
 
-    public Image jumpBar;
-    public float maxJumpCount = 5;
-    float JumpCount = 0;
+    //public Image jumpBar;
+    //public float maxJumpCount = 5;
+    //float JumpCount = 0;
+    public SkillController jumpSkill;
+    public SkillController attackSkill;
 
     public Image shieldBar;
     public GameObject head;
@@ -51,8 +53,9 @@ public class Player : MonoBehaviour
         if (isGround)
         {
             rigid.AddForce(Vector3.up * jump, ForceMode2D.Impulse);
-            JumpCount++;
-            jumpBar.fillAmount = JumpCount / maxJumpCount;
+            //JumpCount++;
+            //jumpBar.fillAmount = JumpCount / maxJumpCount;
+            jumpSkill.SetSkillCount();
         }
     }
 
@@ -60,7 +63,8 @@ public class Player : MonoBehaviour
     {
         anim.SetTrigger("Attack");
         //attackCount++;
-        attackBar.fillAmount = attackCount / maxAttackCount;
+        //attackBar.fillAmount = attackCount / maxAttackCount;
+        //attackSkill.SetSkillCount();
     }
 
     public void Shield()
@@ -89,24 +93,6 @@ public class Player : MonoBehaviour
  
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        //if (collision.gameObject.tag == "Object")
-        //{
-        //    Debug.Log("ggfdg");
-        //    if (healthCount >= 0 && !clickShield)
-        //    {
-        //        GameObject part = Instantiate(particle, collision.transform.position, Quaternion.identity);
-        //        Destroy(part, 2f);
-        //        Destroy(collision.transform.GetChild(0).gameObject);
-        //        health.transform.GetChild(healthCount).gameObject.SetActive(false);
-        //        healthCount--;
-        //        if (healthCount < 0)
-        //        {
-        //            Debug.Log("End");
-        //        }
-        //    }
-
-        //    clickShield = false;
-        //}
 
         if (collision.gameObject.tag =="Ground")
         {
@@ -132,6 +118,7 @@ public class Player : MonoBehaviour
             Debug.Log("ggfdg");
             if (healthCount >= 0 && !clickShield)
             {
+                rigid.velocity = Vector2.zero;
                 GameObject part = Instantiate(particle, collision.transform.position, Quaternion.identity);
                 Destroy(part, 2f);
                 Destroy(collision.gameObject);//.transform.GetChild(0).gameObject);
