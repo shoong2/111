@@ -45,7 +45,13 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+
        
+       if(attackSkill.isSkill ==true)
+        {
+            attackSkill.isSkill = false;
+
+        }
     }
 
     public void Jump()
@@ -99,6 +105,7 @@ public class Player : MonoBehaviour
             isGround = true;
             head.SetActive(true);
         }
+
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -124,11 +131,14 @@ public class Player : MonoBehaviour
                 Destroy(collision.gameObject);//.transform.GetChild(0).gameObject);
                 health.transform.GetChild(healthCount).gameObject.SetActive(false);
                 healthCount--;
+                GameManager.instance.combo = 0;
                 if (healthCount < 0)
                 {
-                    Debug.Log("End");
+                    GameManager.instance.GameOver();
                 }
             }
+
+            
 
             //clickShield = false;
         }

@@ -17,6 +17,12 @@ public class SkillController : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     public float maxSkillCount = 10;
     public float skillCount = 0;
 
+    public bool isSkill = false;
+
+    //public GameObject player;
+
+    //bool isSkill = false;
+
     private void Awake()
     {
         skillBarImag = GetComponent<Image>();
@@ -59,6 +65,8 @@ public class SkillController : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
                 skillBarColor.a = 0;
                 skillBarImag.color = skillBarColor;
+                isSkill = true;
+                //player.GetComponent<Rigidbody2D>().AddForce(Vector3.up * 20, ForceMode2D.Impulse);
             }
         }
     }
